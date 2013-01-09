@@ -63,7 +63,7 @@ __END__
 
 =head1 NAME
 
-JSONWire::Client - ...
+JSONWire::Client - Client library for JSON Wire protocol.
 
 =head1 SYNOPSIS
 
@@ -71,15 +71,51 @@ JSONWire::Client - ...
 
 =head1 DESCRIPTION
 
-JSONWire::Client is
+JSONWire::Client is yet another client library for JSON Wire protocol.
 
 B<THIS IS A DEVELOPMENT RELEASE. API MAY CHANGE WITHOUT NOTICE>.
+
+=head1 METHODS
+
+=over 4
+
+=item my $client = JSONWire::Client->new(%args)
+
+Create new instance of JSONWire::Client with following arguments:
+
+=over 4
+
+=item host: Str(Required)
+
+=item port: Str(Required)
+
+=item agent: LWP::UserAgent(Optional)
+
+=item json: JSON|JSON::XS(Optional)
+
+=back
+
+=item my $session = $client->create_session();
+
+Create new session for JSON Wire Protocol.
+
+=back
+
+=head1 Error Handling
+
+JSONWire::Client throws exception when got a error response from JSON Wire server.
+
+The exception object is L<JSONWire:Client::Exception::HTTP>.
 
 =head1 AUTHOR
 
 Tokuhiro Matsuno E<lt>tokuhirom AAJKLFJEF@ GMAIL COME<gt>
 
 =head1 SEE ALSO
+
+L<Selenium::Remote::Driver> is great library. But I want to use more simple one.
+
+L<http://code.google.com/p/selenium/wiki/JsonWireProtocol> is official document for JSON Wire Protocol.
 
 =head1 LICENSE
 
