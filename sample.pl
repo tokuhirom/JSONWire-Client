@@ -9,8 +9,7 @@ use JSONWire::Client;
 # run "phantomjs -webdriver=9999" first.
 
 my $driver = JSONWire::Client->new(
-    host => '127.0.0.1',
-    port => 9999,
+    base => 'http://127.0.0.1:9999',
 );
 my $session = $driver->create_session;
 $session->post('/url', {url => 'http://mixi.jp'});

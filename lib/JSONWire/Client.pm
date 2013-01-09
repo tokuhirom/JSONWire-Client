@@ -11,37 +11,13 @@ use LWP::UserAgent;
 use Moo;
 use JSON;
 
-has port => (
-    is => 'ro',
-    required => 1,
-);
-
-has json => (
-    is => 'ro',
-    default => sub {
-        JSON->new
-    },
-);
-
-has host => (
-    is => 'ro',
-    required => 1,
-);
-
-has agent => (
-    is => 'ro',
-    default => sub {
-        LWP::UserAgent->new(
-            agent => __PACKAGE__ . "/" . $VERSION,
-        );
-    },
-);
+extends "JSONWire::Client::BaseClient";
 
 sub create_session {
     my $self = shift;
 
     my $res = $self->agent->post(
-        "http://$self->{host}:$self->{port}/session",
+        "$self->{base}/session",
         Content => $self->json->encode( { desiredCapabilities => {} } )
     );
     if ($res->code ne 303) {
@@ -85,9 +61,9 @@ Create new instance of JSONWire::Client with following arguments:
 
 =over 4
 
-=item host: Str(Required)
+=item base: Str(Required)
 
-=item port: Str(Required)
+Base URL like "http://127.0.0.1:9999".
 
 =item agent: LWP::UserAgent(Optional)
 

@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 
 use Moo;
+use JSON;
 
 has base => (
     is => 'ro',
@@ -12,12 +13,19 @@ has base => (
 
 has agent => (
     is => 'ro',
-    required => 1,
+    default => sub {
+        LWP::UserAgent->new(
+            agent => __PACKAGE__ . "/" . $JSONWire::Client::VERSION,
+        );
+    },
 );
+
 
 has json => (
     is => 'ro',
-    required => 1,
+    default => sub {
+        JSON->new
+    },
 );
 
 has last_response => (
