@@ -14,5 +14,14 @@ my $driver = JSONWire::Client->new(
 );
 my $session = $driver->create_session;
 $session->post('/url', {url => 'http://mixi.jp'});
-my $data = $session->get('/title');
-say $data->{value};
+my $title = $session->get('/title');
+say $title;
+
+$session->post('/url', {url => 'http://64p.org/'});
+{
+    my $data = $session->post('/elements', {using => 'css selector', value => '.sites .title'});
+    for my $id (map { $_->{ELEMENT} } @{$data}) {
+        my $dat = $session->get("/element/$id/text");
+        say $dat;
+    }
+}

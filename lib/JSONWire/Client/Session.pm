@@ -34,7 +34,7 @@ sub get {
             $res
         )
     }
-    return $self->json->decode($res->content);
+    return $self->json->decode($res->content)->{value};
 }
 
 sub post {
@@ -47,7 +47,7 @@ sub post {
             $res
         )
     }
-    return $self->json->decode($res->content);
+    return $self->json->decode($res->content)->{value};
 }
 
 1;
