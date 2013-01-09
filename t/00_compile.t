@@ -1,5 +1,10 @@
 use strict;
 use Test::More;
 
-BEGIN { use_ok 'JSONWire::Client' }
+use_ok $_ for qw(
+    JSONWire::Client
+    JSONWire::Client::Exception::HTTP
+    JSONWire::Client::Session
+);
+
 done_testing;

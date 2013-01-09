@@ -4,7 +4,57 @@ use warnings;
 use 5.008005;
 our $VERSION = '0.01';
 
+use JSONWire::Client::Exception::HTTP;
+use JSONWire::Client::Session;
 
+use LWP::UserAgent;
+use Moo;
+use JSON;
+
+has port => (
+    is => 'ro',
+    required => 1,
+);
+
+has json => (
+    is => 'ro',
+    default => sub {
+        JSON->new
+    },
+);
+
+has host => (
+    is => 'ro',
+    required => 1,
+);
+
+has agent => (
+    is => 'ro',
+    default => sub {
+        LWP::UserAgent->new(
+            agent => __PACKAGE__ . "/" . $VERSION,
+        );
+    },
+);
+
+sub create_session {
+    my $self = shift;
+
+    my $res = $self->agent->post(
+        "http://$self->{host}:$self->{port}/session",
+        Content => $self->json->encode( { desiredCapabilities => {} } )
+    );
+    if ($res->code ne 303) {
+        JSONWire::Client::Exception::HTTP->throw($res);
+    }
+    my $base = $res->header('Location') || die "Missing location";
+
+    return JSONWire::Client::Session->new(
+        base => $base,
+        agent => $self->agent,
+        json => $self->json,
+    );
+}
 
 1;
 __END__

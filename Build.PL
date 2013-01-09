@@ -13,9 +13,10 @@ my $build = Module::Build->new(
     configure_requires   => { 'Module::Build' => '0.38' },
     requires             => {
         perl => '5.008005',
-        # 'Exporter'                      => '0',
         'parent'                        => '0',
-        # 'Plack'                         => '0.9949',
+        Moo => 0,
+        'LWP::UserAgent' => 6,
+        JSON => 2,
     },
 
     no_index    => { 'directory' => [ 'inc' ] },
