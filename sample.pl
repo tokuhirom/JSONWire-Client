@@ -20,8 +20,8 @@ say $title;
 $session->post('/url', {url => 'http://64p.org/'});
 {
     my $data = $session->post('/elements', {using => 'css selector', value => '.sites .title'});
-    for my $id (map { $_->{ELEMENT} } @{$data}) {
-        my $dat = $session->get("/element/$id/text");
+    for my $element (map { $session->new_element($_->{ELEMENT}) } @{$data}) {
+        my $dat = $element->get("/text");
         say $dat;
     }
 }
